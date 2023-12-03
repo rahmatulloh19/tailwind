@@ -107,11 +107,6 @@ elList.addEventListener("click", function (evt) {
 });
 
 function renderTodo(array) {
-	elWrapper.children[0].querySelector("span").textContent = array.length;
-	const completedTodos = array.filter((item) => item.isCompleted == true);
-	elWrapper.children[1].querySelector("span").textContent = completedTodos.length;
-	const unCompletedTodos = array.filter((item) => item.isCompleted != true);
-	elWrapper.children[2].querySelector("span").textContent = unCompletedTodos.length;
 	elList.innerHTML = "";
 	array.forEach((item) => {
 		const cloneTemplate = elTemplate.cloneNode(true);
@@ -124,15 +119,12 @@ function renderTodo(array) {
 		if (item.isCompleted) {
 			cloneTemplate.querySelector(".text-xl").classList.add("line-through");
 			cloneTemplate.querySelector("input").checked = true;
+			elWrapper.children[0].querySelector("span").textContent = array.length;
+			const completedTodos = array.filter((item) => item.isCompleted == true);
+			elWrapper.children[1].querySelector("span").textContent = completedTodos.length;
+			const unCompletedTodos = array.filter((item) => item.isCompleted != true);
+			elWrapper.children[2].querySelector("span").textContent = unCompletedTodos.length;
 		}
-
-		// cloneTemplate.querySelector("input").addEventListener("change", (evt) => {
-		// 	if (evt.target.checked) {
-		// 		evt.target.nextElementSibling.classList.add("line-through");
-		// 	} else {
-		// 		evt.target.nextElementSibling.classList.remove("line-through");
-		// 	}
-		// });
 
 		fragment.appendChild(cloneTemplate);
 	});
