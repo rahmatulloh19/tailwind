@@ -11,7 +11,7 @@
 
 		<div class="container mx-auto">
 			<form class="js-form">
-				<div class="w-2/3 mx-auto mt-8 flex justify-between">
+				<div class="md:w-2/3 mx-auto mt-8 flex justify-between">
 					<input
 						class="w-full p-3 rounded-xl outline-none font-semibold js-input"
 						type="text"
@@ -24,7 +24,7 @@
 				</div>
 			</form>
 
-			<div class="flex wrapper mx-auto justify-center mt-8 gap-x-4">
+			<div class="flex wrapper flex-wrap gap-4 mx-auto justify-center mt-8">
 				<button
 					class="text-white text-xl bg-lime-500 px-5 py-3 rounded-xl position: relative"
 					type="button">
@@ -48,17 +48,19 @@
 		</div>
 
 		<template>
-			<li class="flex items-center border border-white p-4 rounded-xl">
+			<li class="flex items-center flex-wrap border border-white p-4 rounded-xl gap-y-4">
 				<input class="mr-6" type="checkbox" />
 				<p class="text-white text-xl">Yugurish</p>
-				<button class="text-white bg-red-400 px-5 py-3 rounded-xl ms-auto" type="button">
-					Delete
-					<span class="count"></span>
-				</button>
-				<button class="text-white bg-green-600 px-5 py-3 rounded-xl ms-4" type="button">
-					Edit
-					<span class="count"></span>
-				</button>
+				<div class="item-inner mx-auto">
+					<button class="text-white bg-red-400 px-5 py-3 rounded-xl" type="button">
+						Delete
+						<span class="count"></span>
+					</button>
+					<button class="text-white bg-green-600 px-5 py-3 rounded-xl ms-4" type="button">
+						Edit
+						<span class="count"></span>
+					</button>
+				</div>
 			</li>
 		</template>
 

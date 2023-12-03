@@ -75,16 +75,25 @@ elList.addEventListener("click", function (evt) {
 		const targetId = evt.target.dataset.id;
 		const editingElementsObject = todos.find((item) => item.id == targetId);
 
-		editingElementsObject.todo_value = prompt(
-			"Do you want to change value",
-			editingElementsObject.todo_value
-		);
+		const newValue = prompt("Do you want to change value", editingElementsObject.todo_value);
+
+		if (newValue) {
+			editingElementsObject.todo_value = newValue;
+		}
 
 		renderTodo(todos);
 
 		localStorage.setItem("token", JSON.stringify(todos));
 	}
 });
+
+function changerCount(array) {
+	elWrapper.children[0].querySelector("span").textContent = array.length;
+	const completedTodos = array.filter((item) => item.isCompleted == true);
+	elWrapper.children[1].querySelector("span").textContent = completedTodos.length;
+	const unCompletedTodos = array.filter((item) => item.isCompleted != true);
+	elWrapper.children[2].querySelector("span").textContent = unCompletedTodos.length;
+}
 
 function renderTodo(array) {
 	elList.innerHTML = "";
@@ -97,14 +106,12 @@ function renderTodo(array) {
 			cloneTemplate.querySelector(".bg-green-600").dataset.id = item.id;
 			cloneTemplate.querySelector(".bg-red-400").dataset.id = item.id;
 
+			changerCount(array);
+
 			if (item.isCompleted) {
 				cloneTemplate.querySelector(".text-xl").classList.add("line-through");
 				cloneTemplate.querySelector("input").checked = true;
-				elWrapper.children[0].querySelector("span").textContent = array.length;
-				const completedTodos = array.filter((item) => item.isCompleted == true);
-				elWrapper.children[1].querySelector("span").textContent = completedTodos.length;
-				const unCompletedTodos = array.filter((item) => item.isCompleted != true);
-				elWrapper.children[2].querySelector("span").textContent = unCompletedTodos.length;
+				changerCount(array);
 			}
 
 			fragment.appendChild(cloneTemplate);
