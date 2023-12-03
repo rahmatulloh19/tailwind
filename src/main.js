@@ -62,7 +62,9 @@ elList.addEventListener("click", function (evt) {
 		const targetId = evt.target.dataset.id;
 		const deletingElementsIndex = todos.findIndex((item) => item.id == targetId);
 
-		todos.splice(deletingElementsIndex, 1);
+		if (confirm(`Do you want to delete '${todos[deletingElementsIndex].todo_value}' ?`)) {
+			todos.splice(deletingElementsIndex, 1);
+		}
 
 		renderTodo(todos);
 
