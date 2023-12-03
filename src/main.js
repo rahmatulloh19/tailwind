@@ -87,11 +87,11 @@ elList.addEventListener("click", function (evt) {
 	}
 });
 
-function changerCount(array) {
-	elWrapper.children[0].querySelector("span").textContent = array.length;
-	const completedTodos = array.filter((item) => item.isCompleted == true);
+function changerCount() {
+	elWrapper.children[0].querySelector("span").textContent = todos.length;
+	const completedTodos = todos.filter((item) => item.isCompleted == true);
 	elWrapper.children[1].querySelector("span").textContent = completedTodos.length;
-	const unCompletedTodos = array.filter((item) => item.isCompleted != true);
+	const unCompletedTodos = todos.filter((item) => item.isCompleted != true);
 	elWrapper.children[2].querySelector("span").textContent = unCompletedTodos.length;
 }
 
@@ -106,12 +106,12 @@ function renderTodo(array) {
 			cloneTemplate.querySelector(".bg-green-600").dataset.id = item.id;
 			cloneTemplate.querySelector(".bg-red-400").dataset.id = item.id;
 
-			changerCount(array);
+			changerCount();
 
 			if (item.isCompleted) {
 				cloneTemplate.querySelector(".text-xl").classList.add("line-through");
 				cloneTemplate.querySelector("input").checked = true;
-				changerCount(array);
+				changerCount();
 			}
 
 			fragment.appendChild(cloneTemplate);
