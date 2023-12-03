@@ -1,46 +1,14 @@
+if (!localStorage.getItem("token")) {
+	localStorage.setItem("token", JSON.stringify([]));
+}
+
 const elForm = document.querySelector(".js-form");
 const elList = document.querySelector(".mt-10");
 const elTemplate = document.querySelector("template").content;
 const elWrapper = document.querySelector(".wrapper");
 const fragment = document.createDocumentFragment();
 
-const todos = [
-	{
-		id: 1,
-		todo_value: "da",
-		isCompleted: false,
-	},
-	{
-		id: 2,
-		todo_value: "d",
-		isCompleted: false,
-	},
-	{
-		id: 3,
-		todo_value: "ad",
-		isCompleted: false,
-	},
-	{
-		id: 4,
-		todo_value: "a",
-		isCompleted: true,
-	},
-	{
-		id: 5,
-		todo_value: "da",
-		isCompleted: false,
-	},
-	{
-		id: 6,
-		todo_value: "d",
-		isCompleted: true,
-	},
-	{
-		id: 7,
-		todo_value: "ad",
-		isCompleted: false,
-	},
-];
+const todos = JSON.parse(localStorage.getItem("token"));
 
 renderTodo(todos);
 
@@ -49,11 +17,15 @@ elForm.addEventListener("submit", (evt) => {
 
 	const elInput = evt.target[0];
 
-	todos.push({
-		id: todos.length ? todos.at(-1).id + 1 : 1,
-		todo_value: elInput.value.trim(),
-		isCompleted: false,
-	});
+	if (elInput.value) {
+		todos.push({
+			id: todos.length ? todos.at(-1).id + 1 : 1,
+			todo_value: elInput.value.trim(),
+			isCompleted: false,
+		});
+	}
+
+	localStorage.setItem("token", JSON.stringify(todos));
 
 	renderTodo(todos);
 
@@ -83,6 +55,8 @@ elList.addEventListener("click", function (evt) {
 
 		editingElementsObject.isCompleted = !editingElementsObject.isCompleted;
 		renderTodo(todos);
+
+		localStorage.setItem("token", JSON.stringify(todos));
 	}
 	if (evt.target.matches(".bg-red-400")) {
 		const targetId = evt.target.dataset.id;
@@ -91,6 +65,8 @@ elList.addEventListener("click", function (evt) {
 		todos.splice(deletingElementsIndex, 1);
 
 		renderTodo(todos);
+
+		localStorage.setItem("token", JSON.stringify(todos));
 	}
 
 	if (evt.target.matches(".bg-green-600")) {
@@ -103,30 +79,38 @@ elList.addEventListener("click", function (evt) {
 		);
 
 		renderTodo(todos);
+
+		localStorage.setItem("token", JSON.stringify(todos));
 	}
 });
 
 function renderTodo(array) {
 	elList.innerHTML = "";
-	array.forEach((item) => {
-		const cloneTemplate = elTemplate.cloneNode(true);
+	if (array.length) {
+		array.forEach((item) => {
+			const cloneTemplate = elTemplate.cloneNode(true);
 
-		cloneTemplate.querySelector(".text-xl").textContent = item.todo_value;
-		cloneTemplate.querySelector("input").dataset.id = item.id;
-		cloneTemplate.querySelector(".bg-green-600").dataset.id = item.id;
-		cloneTemplate.querySelector(".bg-red-400").dataset.id = item.id;
+			cloneTemplate.querySelector(".text-xl").textContent = item.todo_value;
+			cloneTemplate.querySelector("input").dataset.id = item.id;
+			cloneTemplate.querySelector(".bg-green-600").dataset.id = item.id;
+			cloneTemplate.querySelector(".bg-red-400").dataset.id = item.id;
 
-		if (item.isCompleted) {
-			cloneTemplate.querySelector(".text-xl").classList.add("line-through");
-			cloneTemplate.querySelector("input").checked = true;
-			elWrapper.children[0].querySelector("span").textContent = array.length;
-			const completedTodos = array.filter((item) => item.isCompleted == true);
-			elWrapper.children[1].querySelector("span").textContent = completedTodos.length;
-			const unCompletedTodos = array.filter((item) => item.isCompleted != true);
-			elWrapper.children[2].querySelector("span").textContent = unCompletedTodos.length;
-		}
+			if (item.isCompleted) {
+				cloneTemplate.querySelector(".text-xl").classList.add("line-through");
+				cloneTemplate.querySelector("input").checked = true;
+				elWrapper.children[0].querySelector("span").textContent = array.length;
+				const completedTodos = array.filter((item) => item.isCompleted == true);
+				elWrapper.children[1].querySelector("span").textContent = completedTodos.length;
+				const unCompletedTodos = array.filter((item) => item.isCompleted != true);
+				elWrapper.children[2].querySelector("span").textContent = unCompletedTodos.length;
+			}
 
-		fragment.appendChild(cloneTemplate);
-	});
+			fragment.appendChild(cloneTemplate);
+		});
+	} else {
+		elList.innerHTML = `
+		<p class="text-2xl text-white text-center mt-20">You have not any todos</p>
+		`;
+	}
 	elList.appendChild(fragment);
 }
