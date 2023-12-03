@@ -6,7 +6,60 @@
 		<link rel="stylesheet" href="./main.css" />
 		<title>Todo</title>
 	</head>
-	<body>
+	<body class="bg-slate-700 font-sans">
+		<h1 class="text-5xl text-white text-center mt-24 font-bold tracking-widest">Todo example</h1>
+
+		<div class="container mx-auto">
+			<form class="js-form">
+				<div class="w-2/3 mx-auto mt-8 flex justify-between">
+					<input
+						class="w-full p-3 rounded-xl outline-none font-semibold js-input"
+						type="text"
+						placeholder="Enter todos... " />
+					<button class="ms-4 bg-blue-600 text-white py-3 px-5 rounded-xl" type="submit">
+						Add
+					</button>
+				</div>
+			</form>
+
+			<div class="flex wrapper mx-auto justify-center mt-8 gap-x-4">
+				<button
+					class="text-white text-xl bg-lime-500 px-5 py-3 rounded-xl position: relative"
+					type="button">
+					All
+					<span class="count bg-gray-600 px-2 rounded position: absolute -top-3 -right-2"></span>
+				</button>
+				<button
+					class="text-white text-xl bg-cyan-600 px-5 py-3 rounded-xl position: relative"
+					type="button">
+					Completed
+					<span class="count bg-gray-600 px-2 rounded position: absolute -top-3 -right-2"></span>
+				</button>
+				<button class="text-xl bg-yellow-400 px-5 py-3 rounded-xl position: relative" type="button">
+					Uncompleted
+					<span
+						class="count bg-gray-600 px-2 rounded position: absolute -top-3 -right-2 text-white"></span>
+				</button>
+			</div>
+
+			<ul class="mt-10 space-y-4"></ul>
+		</div>
+
+		<template>
+			<li class="flex items-center border border-white p-4 rounded-xl">
+				<input class="mr-6" type="checkbox" />
+				<p class="text-white text-xl">Yugurish</p>
+				<button class="text-white bg-red-400 px-5 py-3 rounded-xl ms-auto" type="button">
+					Delete
+					<span class="count"></span>
+				</button>
+				<button class="text-white bg-green-600 px-5 py-3 rounded-xl ms-4" type="button">
+					Edit
+					<span class="count"></span>
+				</button>
+			</li>
+		</template>
+
 		<script src="./main.js"></script>
 	</body>
 </html>
